@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="92" viewBox="0 6 240 92" role="img" aria-label="Sybil Agent — monocromatico">
+  <title>Sybil Agent — monocromatico</title>
+  <g id="mark" fill="currentColor">
+    <rect id="cap-01" x="8" y="27.65" width="12" height="28.5" rx="6" fill="currentColor"></rect>
+    <rect id="cap-02" x="26" y="10.77" width="12" height="32.4" rx="6" fill="currentColor"></rect>
+    <rect id="cap-03" x="44" y="13.89" width="12" height="34" rx="6" fill="currentColor"></rect>
+    <rect id="cap-04" x="62" y="34.20" width="12" height="33" rx="6" fill="currentColor"></rect>
+    <rect id="cap-05" x="80" y="56.64" width="12" height="29.7" rx="6" fill="currentColor"></rect>
+    <rect id="cap-06" x="98" y="65.36" width="12" height="24.5" rx="6" fill="currentColor"></rect>
+    <rect id="cap-07" x="116" y="55.43" width="12" height="18" rx="6" fill="currentColor"></rect>
+    <rect id="cap-08" x="134" y="31.55" width="12" height="20.7" rx="6" fill="currentColor"></rect>
+    <rect id="cap-09" x="152" y="13.57" width="12" height="26.8" rx="6" fill="currentColor"></rect>
+    <rect id="cap-10" x="170" y="15.24" width="12" height="31.3" rx="6" fill="currentColor"></rect>
+    <rect id="cap-11" x="188" y="33.85" width="12" height="33.7" rx="6" fill="currentColor"></rect>
+    <rect id="cap-12" x="206" y="54.69" width="12" height="33.6" rx="6" fill="currentColor"></rect>
+    <rect id="cap-13" x="224" y="62.06" width="12" height="31.1" rx="6" fill="currentColor"></rect>
+  </g>
+</svg>

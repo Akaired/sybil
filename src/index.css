@@ -1,0 +1,313 @@
+/* ── iubenda: hide brand attribution badge ──────────────────── */
+.iubenda-cs-brand-badge,
+.iub__us-widget__wrapper {
+  display: none !important;
+}
+
+/* ── iubenda: hide the floating preferences launcher inside the
+   backoffice only — public pages keep it, per Davide. Layout.tsx toggles
+   this class on <body> while a protected route is mounted. ── */
+body.sybil-backoffice .iubenda-tp-btn.iubenda-cs-preferences-link {
+  display: none !important;
+}
+
+/* ── Sybil brand fonts ───────────────────────────────────── */
+/* Archivo (primary) + IBM Plex Mono (code) — must precede all rules */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+@import "tailwindcss";
+
+/* ── Sybil Dark Theme ────────────────────────────────────── */
+@theme {
+  --font-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Fira Code", monospace;
+
+  /* Background layers */
+  --color-bg-base: #0D1114;
+  --color-bg-elevated: #14181C;
+  --color-bg-surface: #1A1F24;
+  --color-bg-overlay: #1F252A;
+
+  /* Foreground */
+  --color-fg-primary: #E9ECEE;
+  --color-fg-muted: #98A0A6;
+  --color-fg-subtle: #6E7681;
+  --color-fg-accent: #FF3B1F;
+
+  /* Semantic */
+  --color-success: #23D18B;
+  --color-warning: #FF9E0A;
+  --color-danger: #FF3B1F;
+
+  /* Sine palette */
+  --color-sine-signal: #FF3B1F;
+  --color-sine-amber: #FF9E0A;
+  --color-sine-acid: #C9E82B;
+  --color-sine-mint: #23D18B;
+  --color-sine-cyan: #00C2D1;
+  --color-sine-indigo: #2C7DF7;
+  --color-sine-graphite: #6E7681;
+  --color-sine-off: #3A4048;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-cap: 999px;
+}
+
+/* ── Base styles ─────────────────────────────────────────── */
+html,
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-fg-primary);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Backoffice manages its own scroll regions (Layout.tsx is h-screen); block
+   body-level scroll there so sub-pixel/scrollbar reflow can't nudge the
+   whole app up under the browser chrome. */
+body.sybil-backoffice {
+  overflow: hidden;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-fg-subtle);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fg-muted);
+}
+
+/* ── Focus ring ──────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--color-fg-accent);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Sybil Sine Wave — Capsule Animations
+   ============================================================ */
+
+/* Capsule transition between states */
+.sybil-capsule {
+  transition: y 320ms cubic-bezier(.4,0,.2,1),
+              height 320ms cubic-bezier(.4,0,.2,1),
+              fill 320ms cubic-bezier(.4,0,.2,1);
+}
+
+/* ── idle: breathing wave, all colors, 4s ──────────────── */
+[data-sybil-state="idle"] .sybil-capsule {
+  animation: sybil-idle-breathe 4s ease-in-out infinite;
+}
+
+@keyframes sybil-idle-breathe {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ── listening: fast pulse, 3 central colors, 1.2s ─────── */
+[data-sybil-state="listening"] .sybil-capsule {
+  animation: sybil-listening-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes sybil-listening-pulse {
+  0%, 100% { opacity: 0.5; transform-origin: center; }
+  50% { opacity: 1; }
+}
+
+/* ── thinking: cascading wave, all colors, 2s ──────────── */
+[data-sybil-state="thinking"] .sybil-capsule {
+  animation: sybil-thinking-wave 2s ease-in-out infinite;
+}
+
+@keyframes sybil-thinking-wave {
+  0%, 100% { opacity: 0.55; }
+  25% { opacity: 1; }
+  75% { opacity: 0.7; }
+}
+
+/* ── speaking: amplitude oscillation, 0.8s ─────────────── */
+[data-sybil-state="speaking"] .sybil-capsule {
+  animation: sybil-speaking-amp 0.8s ease-in-out infinite;
+}
+
+@keyframes sybil-speaking-amp {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ── alert: rapid pulse, signal color only, 0.3s ───────── */
+[data-sybil-state="alert"] .sybil-capsule {
+  animation: sybil-alert-flash 0.3s ease-in-out infinite;
+}
+
+@keyframes sybil-alert-flash {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ── offline: static, no animation ─────────────────────── */
+[data-sybil-state="offline"] .sybil-capsule {
+  animation: none;
+}
+
+/* ============================================================
+   CALL WAVE — per-state capsule waveforms for CallOverlay
+   (CallSineWave.tsx). Separate namespace from .sybil-capsule so
+   the small avatar wave used elsewhere in the app is untouched.
+   Real vertical undulation (translateY), not just opacity pulse.
+   ============================================================ */
+
+.call-capsule {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: y 320ms cubic-bezier(.4,0,.2,1),
+              height 320ms cubic-bezier(.4,0,.2,1),
+              fill 320ms cubic-bezier(.4,0,.2,1);
+}
+
+/* ── idle: slow, gentle breathing bob ──────────────────── */
+[data-call-state="idle"] .call-capsule {
+  animation: call-bob-idle 4s ease-in-out infinite;
+}
+@keyframes call-bob-idle {
+  0%, 100% { transform: translateY(0); opacity: 0.65; }
+  50% { transform: translateY(-3px); opacity: 1; }
+}
+
+/* ── listening: attentive, responsive undulation ───────── */
+[data-call-state="listening"] .call-capsule {
+  animation: call-bob-listening 1.4s ease-in-out infinite;
+}
+@keyframes call-bob-listening {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* ── thinking: cascading traveling wave ────────────────── */
+[data-call-state="thinking"] .call-capsule {
+  animation: call-bob-thinking 1.8s ease-in-out infinite;
+}
+@keyframes call-bob-thinking {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  30% { transform: translateY(-7px); opacity: 1; }
+  60% { transform: translateY(3px); opacity: 0.8; }
+}
+
+/* ── speaking: energetic, fast amplitude ───────────────── */
+[data-call-state="speaking"] .call-capsule {
+  animation: call-bob-speaking 0.6s ease-in-out infinite;
+}
+@keyframes call-bob-speaking {
+  0%, 100% { transform: translateY(0); opacity: 0.75; }
+  50% { transform: translateY(-9px); opacity: 1; }
+}
+
+/* ── alert: rapid sharp jitter ──────────────────────────── */
+[data-call-state="alert"] .call-capsule {
+  animation: call-bob-alert 0.25s ease-in-out infinite;
+}
+@keyframes call-bob-alert {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.75; }
+  50% { transform: translateY(-3px) translateX(1px); opacity: 1; }
+}
+
+/* ── offline: static, no animation ─────────────────────── */
+[data-call-state="offline"] .call-capsule {
+  animation: none;
+}
+
+/* ── Respect reduced motion ────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .sybil-capsule,
+  .landing-capsule,
+  .call-capsule,
+  [data-sybil-state="idle"] .sybil-capsule,
+  [data-sybil-state="listening"] .sybil-capsule,
+  [data-sybil-state="thinking"] .sybil-capsule,
+  [data-sybil-state="speaking"] .sybil-capsule,
+  [data-sybil-state="alert"] .sybil-capsule,
+  [data-call-state="idle"] .call-capsule,
+  [data-call-state="listening"] .call-capsule,
+  [data-call-state="thinking"] .call-capsule,
+  [data-call-state="speaking"] .call-capsule,
+  [data-call-state="alert"] .call-capsule {
+    animation: none;
+    transition: none;
+    opacity: 0.8;
+  }
+}
+
+/* ============================================================
+   Scroll reveal — Roadmap page
+   ============================================================ */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 560ms cubic-bezier(.4,0,.2,1),
+              transform 560ms cubic-bezier(.4,0,.2,1);
+}
+.reveal-up.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.spine-capsule {
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(.4,0,.2,1);
+}
+.spine-capsule.is-revealed {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+  .spine-capsule {
+    transition: none;
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   Landing hero — equalizer capsules
+   ============================================================ */
+.landing-capsule {
+  transform: scaleY(var(--cap-base, 0.6));
+  animation: landing-capwave var(--cap-duration, 1.4s) ease-in-out infinite;
+  animation-delay: var(--cap-delay, 0s);
+}
+
+@keyframes landing-capwave {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slidein {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,5 @@
+/docs/md/*      https://uhrqlwoejawnnhdeabob.supabase.co/functions/v1/docs-public?slug=:splat  200
+/llms.txt       https://uhrqlwoejawnnhdeabob.supabase.co/functions/v1/docs-public?index=1     200
+/llms-full.txt  https://uhrqlwoejawnnhdeabob.supabase.co/functions/v1/docs-public?full=1      200
+
+/*    /index.html   200

@@ -1,0 +1,32 @@
+{
+  "version": "5",
+  "redirects": {
+    "https://esm.sh/@supabase/supabase-js@2": "https://esm.sh/@supabase/supabase-js@2.112.2"
+  },
+  "remote": {
+    "https://esm.sh/@supabase/supabase-js@2.112.2": "ea8a8dc3bcfe3cd929a9f6f83a5c266ad3f9d8101c34f71d465dd73f7ff1b796"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@speechmatics/real-time-client@^8.5.1",
+        "npm:@supabase/supabase-js@^2.112.0",
+        "npm:@tailwindcss/vite@^4.1.18",
+        "npm:@types/node@^24.10.1",
+        "npm:@types/react-dom@^18.3.1",
+        "npm:@types/react@^18.3.1",
+        "npm:@vitejs/plugin-react@^5.1.1",
+        "npm:globals@^16.5.0",
+        "npm:lucide-react@^1.28.0",
+        "npm:react-dom@^18.3.1",
+        "npm:react-icons@^5.7.0",
+        "npm:react-router-dom@^7.18.2",
+        "npm:react@^18.3.1",
+        "npm:tailwindcss@^4.1.18",
+        "npm:typescript@~5.9.3",
+        "npm:vite-plugin-svgr@^4.5.0",
+        "npm:vite@^7.2.4"
+      ]
+    }
+  }
+}
