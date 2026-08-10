@@ -23,6 +23,7 @@ import CallSineWave from "../components/CallSineWave";
 import PublicUserMenu from "../components/PublicUserMenu";
 import PublicNavLinks from "../components/PublicNavLinks";
 import PublicLegalLinks from "../components/PublicLegalLinks";
+import DemoVideoModal from "../components/DemoVideoModal";
 import { useIubendaScript } from "../hooks/useIubendaScript";
 
 const DEMO_ACCOUNT_EMAIL = "demo@sybil.local";
@@ -446,6 +447,7 @@ export default function Landing() {
   const navigate = useNavigate();
   const [demoLoading, setDemoLoading] = useState(false);
   const [demoError, setDemoError] = useState<string | null>(null);
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   useIubendaScript();
 
@@ -535,12 +537,13 @@ export default function Landing() {
             >
               {copy.pages.landing.cta}
             </Link>
-            <a
-              href="#"
-              className="inline-flex items-center px-8 py-4 border border-fg-subtle/20 rounded-lg text-fg-primary font-semibold text-base hover:border-fg-primary transition-colors duration-150"
+            <button
+              type="button"
+              onClick={() => setVideoModalOpen(true)}
+              className="inline-flex items-center px-8 py-4 border border-fg-subtle/20 rounded-lg text-fg-primary font-semibold text-base hover:border-fg-primary transition-colors duration-150 cursor-pointer"
             >
               {copy.pages.landing.ctaSecondary}
-            </a>
+            </button>
             <button
               type="button"
               onClick={handleDemoLogin}
@@ -820,6 +823,8 @@ export default function Landing() {
           </a>
         </div>
       </footer>
+
+      <DemoVideoModal open={videoModalOpen} onClose={() => setVideoModalOpen(false)} />
     </div>
   );
 }
